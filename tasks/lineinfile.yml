@@ -1,0 +1,12 @@
+---
+- name: Modify file content
+  lineinfile:
+    dest: "{{ item.0.dest }}"
+    regexp: "{{ item.0.regexp }}"
+    line: "{{ item.0.line }}"
+  with_subelements:
+    - "{{ commontools_lineinfile }}"
+    - group
+  when:
+    - commontools_lineinfile is defined
+    - item.1 in group_names

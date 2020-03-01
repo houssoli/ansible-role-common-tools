@@ -1,0 +1,47 @@
+---
+dependency:
+  name: galaxy
+
+driver:
+  name: docker # https://blog.codecentric.de/en/2018/12/continuous-infrastructure-ansible-molecule-travisci/
+lint:
+  name: yamllint
+platforms:
+  - name: vm1
+    image: ubuntu:18.04
+    privileged: true
+  - name: vm2
+    image: ubuntu:18.04
+    privileged: true
+
+provisioner:
+  name: ansible
+  lint:
+    name: ansible-lint
+  playbooks:
+    converge: playbook.yml
+  inventory:
+    links:
+      hosts: inventory.yml
+
+scenario:
+  name: default
+  test_sequence:
+#    - lint
+    - cleanup
+    - destroy
+    - dependency
+#    - syntax
+    - create
+    - prepare
+    - converge
+#    - idempotence
+#    - side_effect
+    - verify
+    - cleanup
+    - destroy
+
+verifier:
+  name: testinfra
+  lint:
+    name: flake8

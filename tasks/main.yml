@@ -1,0 +1,32 @@
+---
+- include_tasks: package/update_packages.yml
+  when: commontools_update_all is defined and commontools_update_all == true
+
+- import_tasks: change_root_passwd.yml
+  when: commontools_change_root_pwd_random is defined and commontools_change_root_pwd_random == true
+
+- import_tasks: package/install_packages.yml
+  when: commontools_packages_install is defined
+
+- import_tasks: package/install_extra_packages.yml
+  when: commontools_packages_install_extra is defined
+
+- import_tasks: package/remove_packages.yml
+  when: commontools_packages_remove is defined
+
+- import_tasks: package/remove_extra_packages.yml
+  when: commontools_packages_remove_extra is defined
+
+- import_tasks: copy.yml
+  when: commontools_copy is defined
+
+- import_tasks: file/file.yml
+  when: commontools_files is defined
+
+- import_tasks: template.yml
+  when: commontools_template is defined
+
+- import_tasks: lineinfile.yml
+  when: commontools_lineinfile is defined
+
+- import_tasks: mdadm.yml

@@ -1,0 +1,7 @@
+---
+# extra packages management tasks.
+- include_tasks: packages_extra_Debian.yml
+  when: ansible_os_family == 'Debian'
+
+- include_tasks: packages_extra_RedHat.yml
+  when: ansible_os_family == 'RedHat'

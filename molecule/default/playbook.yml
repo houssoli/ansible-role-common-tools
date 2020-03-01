@@ -1,0 +1,10 @@
+---
+- name: Converge
+  hosts: all
+  become: true
+  roles:
+    - ansible-role-common-tools
+  vars_files:
+    - var.yml
+  vars:
+    - commontools_email: houssoli@gmail.com

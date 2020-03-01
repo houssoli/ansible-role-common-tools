@@ -1,0 +1,86 @@
+# Install on every hosts
+commontools_packages_install:
+  - apt-transport-https
+  - software-properties-common
+  - fail2ban
+  - postfix
+  - htop
+  - glances
+  - iotop
+  - ntp
+  - dos2unix
+  - curl
+  - dnsutils
+  - mdadm
+
+# Install on specific hosts using inventory groups
+commontools_packages_install_extra:
+  - elt:
+      - htop
+      - vim
+    group:
+      - webserver
+
+  - elt:
+      - nano
+    group:
+      - database
+
+# Remove on every hosts
+commontools_packages_remove:
+  - nc
+
+# Remove on specific hosts using inventory groups
+commontools_packages_remove_extra:
+  - group:
+    - webserver
+    elt:
+      - telnet
+
+# Copy on specific hosts using inventory groups
+commontools_copy:
+  - desc: "Copy alias files for all users"
+    src: 00-aliases.sh
+    dest: "/etc/profile.d/00-aliases.sh"
+    mode: "0744"
+    dos_to_unix: true
+    group:
+      - webserver
+
+  - desc: "Copy proxy file for all users"
+    src: 01-proxy.sh
+    dest: "/etc/profile.d/01-proxy.sh"
+    mode: "0744"
+    group:
+      - apache
+
+# File management on specific hosts using inventory groups
+commontools_files:
+  - desc: "Remove useless info on ssh login"
+    path: /etc/update-motd.d/__item__
+    state: absent
+    with_items:
+      - 10-help-text
+      - 50-landscape-sysinfo
+      - 51-cloudguest
+      - 90-updates-available
+    group:
+      - webserver
+
+# Template upload on specific hosts using inventory groups
+commontools_template:
+  - desc: "Upload fail2ban config file"
+    src: fail2ban.conf
+    dest: /etc/fail2ban/jail.d/defaults-debian.conf
+    mode: "0644"
+    group:
+      - webserver
+
+# Modify file on specific hosts using inventory groups
+commontools_lineinfile:
+  - desc: "Postmaster alias"
+    dest: "/etc/aliases"
+    regexp: "^root:.*"
+    line: "root: {{ commontools_email }}"
+    group:
+      - webserver

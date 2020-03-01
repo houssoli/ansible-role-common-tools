@@ -1,0 +1,7 @@
+---
+# install tasks.
+- include_tasks: install_packages_Debian.yml
+  when: ansible_os_family == 'Debian'
+
+- include_tasks: install_packages_RedHat.yml
+  when: ansible_os_family == 'RedHat'

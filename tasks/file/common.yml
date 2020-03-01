@@ -1,0 +1,10 @@
+---
+- name: Manage file
+  file:
+    path: "{{ outer_item.path | regex_replace(\"__item__\", item.0) }}"
+    state: "{{ outer_item.state }}"
+  with_nested:
+    - "{{ outer_item.with_items }}"
+    - "{{ outer_item.group }}"
+  when:
+    - item.1 in group_names

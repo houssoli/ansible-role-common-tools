@@ -1,0 +1,7 @@
+---
+- name: Generate password
+  command: openssl rand -base64 32
+  register: randomPass
+
+- name: Change root passwd
+  shell: echo "root:{{ randomPass }}" | chpasswd

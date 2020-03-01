@@ -1,0 +1,6 @@
+---
+- name: Update & upgrade
+  yum:
+    update_cache: yes
+    autoremove: yes
+  when: ansible_pkg_mgr in ('yum')

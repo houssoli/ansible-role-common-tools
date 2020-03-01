@@ -1,0 +1,7 @@
+---
+# remove tasks.
+- include_tasks: remove_packages_Debian.yml
+  when: ansible_os_family == 'Debian'
+
+- include_tasks: remove_packages_RedHat.yml
+  when: ansible_os_family == 'RedHat'

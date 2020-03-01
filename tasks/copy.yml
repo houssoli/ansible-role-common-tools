@@ -1,0 +1,21 @@
+---
+- name: Upload files
+  copy:
+    src: "{{ item.0.src }}"
+    dest: "{{ item.0.dest }}"
+    mode: "{{ item.0.mode }}"
+  with_subelements:
+    - "{{ commontools_copy }}"
+    - group
+  when:
+    - item.1 in group_names
+
+- name: Convert DOS to UNIX file format
+  shell: "dos2unix {{ item.0.dest }}"
+  with_subelements:
+    - "{{ commontools_copy }}"
+    - group
+  when:
+    - item.0.dos_to_unix is defined
+    - item.0.dos_to_unix == true
+    - item.1 in group_names

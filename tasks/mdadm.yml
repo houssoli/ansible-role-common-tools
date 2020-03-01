@@ -1,0 +1,14 @@
+---
+- name: Check if mdadm conf file exists
+  stat:
+    path: "/etc/mdadm/mdadm.conf"
+  register: mdadm
+
+- name: Set notif email for mdadm alerts
+  replace:
+    dest: "/etc/mdadm/mdadm.conf"
+    regexp: "MAILADDR root"
+    replace: "MAILADDR {{ commontools_email }}"
+  when:
+    - commontools_email is defined
+    - mdadm.stat.islnk is defined

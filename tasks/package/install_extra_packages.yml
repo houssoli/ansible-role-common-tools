@@ -1,0 +1,8 @@
+---
+- include: common/packages_extra.yml
+    action=Install
+    state=present
+  with_items:
+    - "{{ commontools_packages_install_extra }}"
+  loop_control:
+    loop_var: outer_item

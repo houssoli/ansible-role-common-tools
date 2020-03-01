@@ -1,0 +1,8 @@
+---
+- include: common/packages_extra.yml
+    action=Remove
+    state=absent
+  with_items:
+    - "{{ commontools_packages_remove_extra }}"
+  loop_control:
+    loop_var: outer_item

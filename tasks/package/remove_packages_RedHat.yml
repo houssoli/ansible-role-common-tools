@@ -1,0 +1,6 @@
+---
+- name: Remove base soft
+  yum:
+    name: "{{ commontools_packages_remove }}"
+    state: absent
+  when: ansible_pkg_mgr in ('yum')

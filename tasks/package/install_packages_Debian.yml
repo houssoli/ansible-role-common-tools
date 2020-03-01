@@ -1,0 +1,5 @@
+---
+- name: Install base soft
+  apt:
+    name: "{{ commontools_packages_install }}"
+  when: ansible_pkg_mgr in ('apt')

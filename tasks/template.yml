@@ -1,0 +1,11 @@
+---
+- name: Upload template
+  template:
+    src: "{{ item.0.src }}"
+    dest: "{{ item.0.dest }}"
+    mode: "{{ item.0.mode }}"
+  with_subelements:
+    - "{{ commontools_template }}"
+    - group
+  when:
+    - item.1 in group_names

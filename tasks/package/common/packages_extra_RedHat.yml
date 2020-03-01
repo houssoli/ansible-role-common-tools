@@ -1,0 +1,10 @@
+---
+- name: "{{ action }} extra soft"
+  yum:
+    name: "{{ item.1 }}"
+    state: "{{ state }}"
+  with_nested:
+    - "{{ outer_item.group }}"
+    - "{{ outer_item.elt }}"
+  when:
+    - item.0 in group_names

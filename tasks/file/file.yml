@@ -1,0 +1,6 @@
+---
+- include: common.yml
+  with_items:
+    - "{{ commontools_files }}"
+  loop_control:
+    loop_var: outer_item
